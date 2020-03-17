@@ -20,7 +20,7 @@ app.ports.localVal.send({ "for" : gv.for,
 
 function clearStorage () {
   if (localvalsdebug) {
-    console.log("clearstorage");i
+    console.log("clearstorage");
   }
 
   localStorage.clear();
