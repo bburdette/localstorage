@@ -1,15 +1,27 @@
+let localvalsdebug = false;
 
-function storeVal( [name, val] ) { 
-  localStorage.setItem(name, val); 
-//  console.log("js storeVal storing " + name + ", " + val);
+function storeVal( nv ) {
+  localStorage.setItem(nv.name, nv.value);
+
+  if (localvalsdebug) {
+    console.log("js storeVal stored " + nv.name + ", " + nv.value);
+  }
 }
 
-function getVal( [forstr, name] ) { 
-//  console.log("js getVal getting " + name + "," + localStorage.getItem(name) + " for " + forstr);
-  app.ports.localVal.send([forstr, name,localStorage.getItem(name)]); 
+function getVal( gv ) {
+  if (localvalsdebug) {
+    console.log("js getVal getting " + gv.name + "," + localStorage.getItem(gv.name) + " for " + gv.for);
+  }
+
+app.ports.localVal.send({ "for" : gv.for,
+    "name": gv.name,
+    "value": localStorage.getItem(gv.name)});
 }
 
 function clearStorage () {
-//  console.log("clearstorage");
+  if (localvalsdebug) {
+    console.log("clearstorage");i
+  }
+
   localStorage.clear();
 }
