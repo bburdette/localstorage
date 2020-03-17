@@ -30,6 +30,7 @@ type Msg
     | SetValChanged String
     | GetBt
     | SetBt
+    | ClearBt
     | ReceiveLocalVal { for : String, name : String, value : Maybe String }
 
 
@@ -90,6 +91,11 @@ update msg model =
                 }
             )
 
+        ClearBt ->
+            ( model
+            , LS.clearLocalStorage ()
+            )
+
         ReceiveLocalVal lv ->
             ( { model | received = lv }, Cmd.none )
 
@@ -134,6 +140,12 @@ view model =
                         , text = model.getFor
                         , label = EI.labelLeft [ E.centerY ] <| E.text "for"
                         , placeholder = Nothing
+                        }
+                    ]
+                , E.row [ E.width E.fill, E.spacing 5, EB.width 2 ]
+                    [ EI.button buttonStyle
+                        { onPress = Just ClearBt
+                        , label = E.text "Clear Local Storage"
                         }
                     ]
                 , E.row [ E.width E.fill, E.spacing 5 ]
